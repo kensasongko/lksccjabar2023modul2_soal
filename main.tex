@@ -64,6 +64,7 @@ You have been given a task to deploy an image optimizer solution on AWS. The API
     \item You may not open any website unless otherwise specified in section \ref{references} and you may open the control panel of your domain provider to update the nameserver to Route 53.
     \item You may use AWS Console and AWS CLI to deploy the solutions. You may not use SAM, CloudFormation or CDK.
     \item Between and after the event, you may not access your account. Any activity on AWS during this period is not allowed.
+    \item Resources should be given the least privilege IAM permissions. For example if a lambda function needs a put object permission to a bucket, then only give put object permission, do not give get object permission.
     \item During the event, multiple login is not permitted.
     \item If you have any question, do not hesitate to ask.
 \end{enumerate}
@@ -95,17 +96,29 @@ Your task is to create the solution from the section \ref{architecture}.
   \begin{itemize}
     \item Original image bucket:
     \begin{itemize}
-      \item Add tag: Key=LKS-ID, Value=MODUL2
-      \item Add tag: Key=BUCKET-ID, Value=MODUL2-ORIGINAL
+      \item Add a tag to the bucket: Key=LKS-ID, Value=MODUL2-ORIGINAL
     \end{itemize}
     \item Transformed image bucket:
     \begin{itemize}
       \item Create a lifecycle policy to remove images after 30 days.
-      \item Add tags: Key=LKS-ID, Value=MODUL2
-      \item add tags: Key=BUCKET-ID, Value=MODUL2-TRANSFORMED
+      \item Add a tag to the bucket: Key=LKS-ID, Value=MODUL2-TRANSFORMED
+    \end{itemize}
+    \item Both buckets should have the following configuration:
+    \begin{itemize}
+      \item Enable block all public access.
+      \item Access: Bucket and objects not public
     \end{itemize}
   \end{itemize}
-\item Deploy lambda: install sharp, create a development package from the image-processing directory, deploy it. Check README.md for further instruction.
+\item Deploy lambda:
+  \begin{itemize}
+    \item Install Sharp
+    \item Create a development package from the image-processing directory.
+    \item Deploy the lambda function
+    \item Give the function policies as stated in the README.md.
+    \item Create function URL with Auth Type = None.
+    \item Add a tag to the function: Key=LKS-ID, Value=MODUL2-IMAGE-HANDLER
+  \end{itemize}
+ install sharp, create a development package from the image-processing directory, deploy it. Check README.md for further instruction.
 \item Create a CloudFront distribution with the following configuration:
   \begin{itemize}
     \item Price class: Use all edge locations (best performance)
@@ -133,7 +146,7 @@ Your task is to create the solution from the section \ref{architecture}.
       \item Cross-origin resource sharing (CORS) - Access-Control-Expose-Headers: -
       \item Cross-origin resource sharing (CORS) - Access-Control-Max-Age (seconds): 600
     \end{itemize}
-    \item As shown in the architecture diagram, create 2 origin with origin failover (failover criteria: 403), as explained in section \ref{architecture}
+    \item As shown in the architecture diagram, create 2 origin with origin failover (failover criteria: 403), as explained in section \ref{architecture}. The first origin is the transformed bucket, the second origin is the lambda function URL.
     \item Add tag: Key=LKS-ID, Value=MODUL2
   \end{itemize}
   \item Create a CloudFront function from the url-rewrite directory and add it to Viewer request function of the CloudFront distribution.
