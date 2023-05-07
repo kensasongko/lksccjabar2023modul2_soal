@@ -127,10 +127,12 @@ Your task is to create the solution from the section \ref{architecture}.
 \item Create a CloudFront distribution with the following configuration:
   \begin{itemize}
     \item Price class: Use all edge locations (best performance)
-    \item Supported HTTP versions: HTTP/2, HTTP/1.1, HTTP/1.0
+    \item Supported HTTP versions: HTTP/2
+    \item Viewer protocol policy: Redirect HTTP to HTTPS
     \item Security policy: TLSv1.2\_2021
     \item Standard logging: Off
     \item Cookie logging: Off
+    \item Alternate domain name (CNAME): https://modul2.[YOUR\_DOMAIN]
     \item Cache Policy:
     \begin{itemize}
       \item TTL Settings - Minimum TTL (seconds): 10
@@ -158,10 +160,10 @@ Your task is to create the solution from the section \ref{architecture}.
 \end{enumerate}
 \section{How to test your deployment}
 \begin{enumerate}
-  \item Upload an image to the original image bucket (this example uses test1.png as the image name)
-  \item Using your browser open http://images.[YOUR\_DOMAIN]/test1.png.
+  \item Upload an image to the original image bucket (this example uses test1.png as the test image)
+  \item Using your browser open http://modul2.[YOUR\_DOMAIN]/test1.png.
   \item Check whether /test1.png/original exists in your transformed bucket image.
-  \item Using your browser open http://images.[YOUR\_DOMAIN]/test1.png?width=200.
+  \item Using your browser open http://modul2.[YOUR\_DOMAIN]/test1.png?width=200.
   \item Check whether /test1.png/width=200 exists in your transformed bucket image.
 \end{enumerate}
 \section{References}\label{references}
