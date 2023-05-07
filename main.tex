@@ -86,7 +86,7 @@ You have been given a task to deploy an image optimizer solution on AWS. The API
 
 \begin{enumerate}
 \item The repository URL for the required source code to deploy this solution is \href{https://github.com/kensasongko/lksccjabar2023modul2_aplikasi}{https://github.com/kensasongko/lksccjabar2023modul2\_aplikasi}
-\item This solution must be deployed in \textbf{us-east-1 (N. Virginia) region}. Deploying in another region will result in a major point reduction.
+\item This solution must be deployed in \textbf{ap-southeast-1 (Singapore) region}. Deploying in another region will result in a major point reduction.
 \end{enumerate}
 
 \section{Task}
@@ -116,7 +116,7 @@ Your task is to create the solution from the section \ref{architecture}.
     \item Create and deploy the lambda function with the following configuration:
     \begin{itemize}
       \item Lambda runtime: nodejs16.x
-      \item Memory size: 256 MB
+      \item Memory size: 512 MB
       \item Give the function policies as stated in the README.md.
       \item Add environment variables as stated in the README.md.
       \item Create function URL with Auth Type = None.
@@ -153,8 +153,8 @@ Your task is to create the solution from the section \ref{architecture}.
       \item Cross-origin resource sharing (CORS) - Access-Control-Expose-Headers: -
       \item Cross-origin resource sharing (CORS) - Access-Control-Max-Age (seconds): 600
     \end{itemize}
-    \item Create 2 origin with origin failover (failover criteria: 403), as explained in section \ref{architecture}. The first origin is the transformed bucket, the second origin is the lambda function URL. Add a custom header to the second origin, the name of the custom header is x-origin-secret-headerx and, the value is the secrey key you have previously added to the lambda function.
-    \item Add tag: Key=LKS-ID, Value=MODUL2
+    \item Create an origin group which contains of 2 origins (failover criteria: 403) as explained in section \ref{architecture}. The first origin is the transformed bucket, the second origin is the lambda function URL. Add a custom header to the second origin, the name of the custom header is x-origin-secret-headerx and, the value is the secrey key you have previously added to the lambda function.
+    \item Add a tag to the distribution: Key=LKS-ID, Value=MODUL2
   \end{itemize}
   \item Create a CloudFront function from the url-rewrite directory and add it to Viewer request function of the CloudFront distribution.
 \end{enumerate}
