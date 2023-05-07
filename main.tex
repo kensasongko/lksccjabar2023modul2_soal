@@ -26,7 +26,7 @@
     {-}{{-}}1
 }
 
-\title{Modul 1 - Serverless Architecture}
+\title{Modul 2 - Lambda for Image Optimization}
 \author{}
 
 \begin{document}
@@ -113,12 +113,17 @@ Your task is to create the solution from the section \ref{architecture}.
   \begin{itemize}
     \item Install Sharp
     \item Create a development package from the image-processing directory.
-    \item Deploy the lambda function
-    \item Give the function policies as stated in the README.md.
-    \item Create function URL with Auth Type = None.
-    \item Add a tag to the function: Key=LKS-ID, Value=MODUL2-IMAGE-HANDLER
+    \item Create and deploy the lambda function with the following configuration:
+    \begin{itemize}
+      \item Lambda runtime: nodejs16.x
+      \item Memory size: 256 MB
+      \item Give the function policies as stated in the README.md.
+      \item Add environment variables as stated in the README.md.
+      \item Create function URL with Auth Type = None.
+      \item Add a tag to the function: Key=LKS-ID, Value=MODUL2-IMAGE-HANDLER
+    \end{itemize}
+    \item Check README.md for more instruction.
   \end{itemize}
- install sharp, create a development package from the image-processing directory, deploy it. Check README.md for further instruction.
 \item Create a CloudFront distribution with the following configuration:
   \begin{itemize}
     \item Price class: Use all edge locations (best performance)
@@ -146,10 +151,18 @@ Your task is to create the solution from the section \ref{architecture}.
       \item Cross-origin resource sharing (CORS) - Access-Control-Expose-Headers: -
       \item Cross-origin resource sharing (CORS) - Access-Control-Max-Age (seconds): 600
     \end{itemize}
-    \item As shown in the architecture diagram, create 2 origin with origin failover (failover criteria: 403), as explained in section \ref{architecture}. The first origin is the transformed bucket, the second origin is the lambda function URL.
+    \item Create 2 origin with origin failover (failover criteria: 403), as explained in section \ref{architecture}. The first origin is the transformed bucket, the second origin is the lambda function URL. Add a custom header to the second origin, the name of the custom header is x-origin-secret-headerx and, the value is the secrey key you have previously added to the lambda function.
     \item Add tag: Key=LKS-ID, Value=MODUL2
   \end{itemize}
   \item Create a CloudFront function from the url-rewrite directory and add it to Viewer request function of the CloudFront distribution.
+\end{enumerate}
+\section{How to test your deployment}
+\begin{enumerate}
+  \item Upload an image to the original image bucket (this example uses test1.png as the image name)
+  \item Using your browser open http://images.[YOUR\_DOMAIN]/test1.png.
+  \item Check whether /test1.png/original exists in your transformed bucket image.
+  \item Using your browser open http://images.[YOUR\_DOMAIN]/test1.png?width=200.
+  \item Check whether /test1.png/width=200 exists in your transformed bucket image.
 \end{enumerate}
 \section{References}\label{references}
 \begin{itemize}
@@ -159,7 +172,6 @@ Your task is to create the solution from the section \ref{architecture}.
 \item \href{https://docs.aws.amazon.com/acm/latest/userguide/acm-overview.html}{Certificate Manager documentation}
 \item \href{https://sharp.pixelplumbing.com/}{Sharp documentation}
 \end{itemize}
-
 \section*{Good luck!}
 
 \end{document}
