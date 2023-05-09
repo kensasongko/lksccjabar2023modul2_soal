@@ -63,8 +63,8 @@ You have been given a task to deploy an image optimizer solution on AWS. The API
     \item You have 3 hours to finish the tasks.
     \item You may not open any website unless otherwise specified in section \ref{references} and you may open the control panel of your domain provider to update the nameserver to Route 53.
     \item You may use AWS Console and AWS CLI to deploy the solutions. You may not use SAM, CloudFormation or CDK.
-    \item Between and after the event, you may not access your account. Any activity on AWS during this period is not allowed.
-    \item Resources should be given the least privilege IAM permissions. For example if a lambda function needs a put object permission to a bucket, then only give put object permission, do not give get object permission.
+    \item Between and after the event, you may not access your account. Any activity on your AWS account during this period is not allowed.
+    \item Resources should be given the least privilege. For example if a lambda function needs a put object permission to a bucket, then only give put object permission, do not give write object permission.
     \item During the event, multiple login is not permitted.
     \item If you have any question, do not hesitate to ask.
 \end{enumerate}
@@ -120,10 +120,11 @@ Your task is to create the solution from the section \ref{architecture}.
       \item Give the function policies as stated in the README.md.
       \item Add environment variables as stated in the README.md.
       \item Create function URL with Auth Type = None.
-      \item Add a tag to the function: Key=LKS-ID, Value=MODUL2-IMAGE-HANDLER
+      \item Add a tag to the function: Key=LKS-ID, Value=MODUL2
     \end{itemize}
     \item Check README.md for more instruction.
   \end{itemize}
+\item Create a certificate for *.[YOUR\_DOMAIN] in ACM for CloudFront.
 \item Create a CloudFront distribution with the following configuration:
   \begin{itemize}
     \item Price class: Use all edge locations (best performance)
@@ -132,7 +133,7 @@ Your task is to create the solution from the section \ref{architecture}.
     \item Security policy: TLSv1.2\_2021
     \item Standard logging: Off
     \item Cookie logging: Off
-    \item Alternate domain name (CNAME): https://modul2.[YOUR\_DOMAIN]
+    \item Alternate domain name: https://modul2.[YOUR\_DOMAIN]
     \item Cache Policy:
     \begin{itemize}
       \item TTL Settings - Minimum TTL (seconds): 10
@@ -168,11 +169,13 @@ Your task is to create the solution from the section \ref{architecture}.
 \end{enumerate}
 \section{References}\label{references}
 \begin{itemize}
-\item \href{https://docs.aws.amazon.com/lambda/latest/dg/welcome.html}{Lambda documentation}
-\item \href{https://docs.aws.amazon.com/apigateway/latest/developerguide/welcome.html}{API Gateway documentation}
-\item \href{https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/Welcome.html}{Route 53 documentation}
-\item \href{https://docs.aws.amazon.com/acm/latest/userguide/acm-overview.html}{Certificate Manager documentation}
-\item \href{https://sharp.pixelplumbing.com/}{Sharp documentation}
+  \item \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/Welcome.html}{S3 documentation}
+  \item \href{https://docs.aws.amazon.com/lambda/latest/dg/welcome.html}{Lambda documentation}
+  \item \href{https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/Welcome.html}{Route 53 documentation}
+  \item \href{https://docs.aws.amazon.com/acm/latest/userguide/acm-overview.html}{Certificate Manager documentation}
+  \item \href{https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/Introduction.html}{CloudFront documentation}
+  \item \href{https://sharp.pixelplumbing.com/}{Sharp documentation}
+  \item \href{https://docs.npmjs.com/}{NPM documentation}
 \end{itemize}
 \section*{Good luck!}
 
