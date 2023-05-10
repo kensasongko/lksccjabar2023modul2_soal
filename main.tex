@@ -154,7 +154,7 @@ Your task is to create the solution from the section \ref{architecture}.
       \item Cross-origin resource sharing (CORS) - Access-Control-Expose-Headers: -
       \item Cross-origin resource sharing (CORS) - Access-Control-Max-Age (seconds): 600
     \end{itemize}
-    \item Create an origin group which contains of 2 origins (failover criteria: 403) as explained in section \ref{architecture}. The first origin is the transformed bucket, the second origin is the lambda function URL. Add a custom header to the second origin, the name of the custom header is x-origin-secret-headerx and, the value is the secrey key you have previously added to the lambda function.
+    \item Create an origin group which contains of 2 origins (failover criteria: 403) as explained in section \ref{architecture}. The first origin is the transformed bucket, the second origin is the lambda function URL. Add a custom header to the second origin, the name of the custom header is x-origin-secret-header and, the value is the secrey key you have previously added to the lambda function.
     \item Add a tag to the distribution: Key=LKS-ID, Value=MODUL2
   \end{itemize}
   \item Create a CloudFront function from the url-rewrite directory and add it to Viewer request function of the CloudFront distribution.
